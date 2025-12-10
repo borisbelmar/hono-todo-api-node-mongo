@@ -16,8 +16,8 @@ export const errorHandler = (err: Error, c: Context) => {
   return c.json(
     {
       success: false,
-      error: process.env.NODE_ENV === 'production' 
-        ? 'Internal server error' 
+      error: process.env.NODE_ENV === 'production'
+        ? 'Internal server error'
         : err.message,
       ...(process.env.NODE_ENV !== 'production' && { stack: err.stack }),
     },
