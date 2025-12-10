@@ -86,7 +86,7 @@ app.get('/openapi.json', (c) => {
         description: 'Servidor de desarrollo',
       },
       {
-        url: 'https://basic-hono-api.borisbelmarm.workers.dev',
+        url: 'https://todo-list.dobleb.cl',
         description: 'Servidor de producción',
       },
     ],

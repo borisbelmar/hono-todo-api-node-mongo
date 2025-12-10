@@ -27,6 +27,9 @@ Thumbs.db
 
 # Testing
 coverage/
+*.test.ts
+*.spec.ts
+vitest.config.ts
 
 # Logs
 logs/
@@ -38,6 +41,7 @@ data/
 # Git
 .git/
 .gitignore
+.gitattributes
 
 # Documentation
 *.md
@@ -49,3 +53,17 @@ data/
 
 # Bruno API client
 bruno/
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Husky
+.husky/
+
+# ESLint
+eslint.config.js
+
+# Migrations
+migrations/

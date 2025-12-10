@@ -6,11 +6,12 @@ WORKDIR /app
 # Copy package files
 COPY package.json yarn.lock ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile
+# Install dependencies (including dev dependencies for build)
+RUN yarn install --frozen-lockfile --production=false
 
 # Copy source code
-COPY . .
+COPY tsconfig.json tsup.config.ts ./
+COPY src ./src
 
 # Build the application
 RUN yarn build
@@ -23,11 +24,22 @@ WORKDIR /app
 # Copy package files
 COPY package.json yarn.lock ./
 
-# Install only production dependencies
-RUN yarn install --frozen-lockfile --production
+# Install only production dependencies and clean cache
+RUN yarn install --frozen-lockfile --production && \
+    yarn cache clean
 
 # Copy built files from builder
 COPY --from=builder /app/dist ./dist
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Change ownership
+RUN chown -R nodejs:nodejs /app
+
+# Switch to non-root user
+USER nodejs
 
 # Expose port
 EXPOSE 8787
