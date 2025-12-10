@@ -1,0 +1,50 @@
+{
+  "name": "todo-list-hono-api-docker-r2-mongo",
+  "version": "2.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsup",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "test": "vitest",
+    "test:ui": "vitest --ui --coverage",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.710.0",
+    "@hono/node-server": "^1.13.7",
+    "@hono/swagger-ui": "^0.5.2",
+    "@hono/zod-openapi": "^1.1.5",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^16.4.7",
+    "hono": "^4.10.6",
+    "jose": "^6.1.2",
+    "mongoose": "^8.9.3",
+    "nanoid": "^5.1.6",
+    "winston": "^3.17.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "3.2.4",
+    "eslint": "^9.39.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^17.23.1",
+    "eslint-plugin-promise": "^7.2.1",
+    "mongodb-memory-server": "^10.1.2",
+    "tsup": "^8.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vitest": "3.2.4"
+  }
+}

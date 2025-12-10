@@ -1,0 +1,16 @@
+meta {
+  name: Get Image
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/images/:userId/:imageId
+  body: none
+  auth: none
+}
+
+params:path {
+  userId: 
+  imageId: 
+}
