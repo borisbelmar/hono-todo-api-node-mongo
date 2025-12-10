@@ -16,9 +16,8 @@ API REST completa construida con Hono, TypeScript, Node.js, MongoDB y Cloudflare
 - 🔑 **Configuración centralizada** sin dependencia de c.env
 - 🐳 **Docker y Docker Compose** para desarrollo y producción
 - 📊 **Logging con Winston** (consola)
-- 🧪 **Testing** con Vitest y MongoDB Memory Server
 - 📦 **Build con tsup** (ESM)
-- 🚀 **CI/CD con GitHub Actions** (build, test, push a GHCR)
+- 🚀 **CI/CD con GitHub Actions** (build, lint, push a GHCR)
 
 ## 📋 Stack Tecnológico
 
@@ -30,7 +29,6 @@ API REST completa construida con Hono, TypeScript, Node.js, MongoDB y Cloudflare
 - **Validación:** Zod + @hono/zod-openapi
 - **Logging:** Winston
 - **Build:** tsup (ESM)
-- **Testing:** Vitest con MongoDB Memory Server
 - **Containerización:** Docker multi-stage
 - **CI/CD:** GitHub Actions
 - **Package Manager:** Yarn 1.22.22
@@ -67,11 +65,6 @@ src/
 │   ├── jwt.ts          # JWT generation/verification
 │   ├── crypto.ts       # Password hashing con bcryptjs
 │   └── r2.ts           # R2 utilities (upload, get, delete, exists)
-├── test/               # Testing utilities
-│   ├── setup.ts        # Vitest global setup
-│   └── helpers/
-│       ├── db.helper.ts      # MongoDB Memory Server
-│       └── context.helper.ts # Mock Hono context
 └── index.ts            # Entry point con middleware chain
 ```
 
@@ -137,11 +130,6 @@ yarn build
 
 # Ejecutar en producción
 yarn start
-
-# Testing
-yarn test              # Tests en watch mode
-yarn test:ui           # UI interactivo de Vitest
-yarn test:coverage     # Coverage report
 
 # Linting
 yarn lint
@@ -214,7 +202,7 @@ docker run -p 8787:8787 \
 
 GitHub Actions configurado para:
 
-1. ✅ **Lint y Tests** en cada push
+1. ✅ **Lint** en cada push
 2. 🐳 **Build de imagen Docker**
 3. 📦 **Push a GitHub Container Registry** (ghcr.io)
 4. 🏷️ **Tags automáticos**: latest, sha, branch
@@ -549,65 +537,6 @@ Authorization: Bearer {token}
 - Al actualizar el `photoUri` de un todo, la imagen anterior se elimina automáticamente de R2
 - Al eliminar un todo, su imagen asociada se elimina automáticamente de R2
 - Previene acumulación de archivos huérfanos
-
----
-
-## 🧪 Testing
-
-El proyecto usa Vitest con MongoDB Memory Server para testing aislado.
-
-### Estructura de Tests
-
-```
-src/
-├── controllers/
-│   ├── auth/
-│   │   ├── register.controller.test.ts
-│   │   └── login.controller.test.ts
-│   ├── todo/
-│   │   ├── create.controller.test.ts
-│   │   ├── list.controller.test.ts
-│   │   ├── get.controller.test.ts
-│   │   ├── update.controller.test.ts
-│   │   ├── patch.controller.test.ts
-│   │   └── delete.controller.test.ts
-│   └── image/
-│       ├── upload.controller.test.ts
-│       ├── get.controller.test.ts
-│       └── delete.controller.test.ts
-├── middleware/
-│   └── auth.middleware.test.ts
-├── schemas/
-│   ├── auth.schema.test.ts
-│   ├── todo.schema.test.ts
-│   └── image.schema.test.ts
-└── utils/
-    ├── crypto.test.ts
-    └── jwt.test.ts
-```
-
-### Características
-
-- ✅ **MongoDB Memory Server**: Base de datos en memoria para tests
-- 🔄 **Auto cleanup**: Base de datos se limpia después de cada test
-- 📊 **Coverage**: Reportes con V8
-- 🎯 **Vitest UI**: Interfaz interactiva para debugging
-
-### Comandos
-
-```bash
-# Watch mode
-yarn test
-
-# Run once
-yarn test --run
-
-# UI interactivo
-yarn test:ui
-
-# Coverage
-yarn test:coverage
-```
 
 ---
 
