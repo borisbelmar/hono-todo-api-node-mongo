@@ -1,6 +1,6 @@
 {
   "name": "todo-list-hono-api-docker-r2-mongo",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "type": "module",
   "main": "src/index.ts",
   "license": "MIT",
