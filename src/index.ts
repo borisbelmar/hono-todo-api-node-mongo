@@ -82,12 +82,8 @@ app.get('/openapi.json', (c) => {
     },
     servers: [
       {
-        url: 'http://localhost:8787',
-        description: 'Servidor de desarrollo',
-      },
-      {
-        url: 'https://todo-list.dobleb.cl',
-        description: 'Servidor de producción',
+        url: `${config.baseUrl}`,
+        description: 'Servidor',
       },
     ],
     tags: [
