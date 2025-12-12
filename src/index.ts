@@ -33,21 +33,18 @@ app.use('/*', loggerMiddleware)
 
 // CORS middleware manual
 app.use('/*', async (c, next) => {
+  // Set CORS headers before processing the request
+  c.header('Access-Control-Allow-Origin', '*')
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  c.header('Access-Control-Max-Age', '600')
+
   // Handle preflight
   if (c.req.method === 'OPTIONS') {
-    c.header('Access-Control-Allow-Origin', '*')
-    c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-    c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    c.header('Access-Control-Max-Age', '600')
     return c.body(null, 204)
   }
 
   await next()
-
-  // Add CORS headers to all responses
-  c.header('Access-Control-Allow-Origin', '*')
-  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 })
 
 // Healthcheck público
