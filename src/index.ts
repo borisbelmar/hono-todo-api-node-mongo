@@ -33,7 +33,14 @@ app.onError(errorHandler)
 app.use('/*', loggerMiddleware)
 
 // CORS middleware
-app.use('/*', cors())
+app.use('/*', cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Content-Type', 'Authorization'],
+  exposeHeaders: ['Content-Length', 'X-Request-Id'],
+  maxAge: 600,
+  credentials: true,
+}))
 
 // Healthcheck público
 app.get('/health', (c) => {
