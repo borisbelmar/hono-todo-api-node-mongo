@@ -39,7 +39,7 @@ app.use('/*', cors({
   allowHeaders: ['Content-Type', 'Authorization'],
   exposeHeaders: ['Content-Length', 'X-Request-Id'],
   maxAge: 600,
-  credentials: true,
+  credentials: false,
 }))
 
 // Healthcheck público
