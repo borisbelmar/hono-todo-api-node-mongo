@@ -1,7 +1,6 @@
 import { serve } from '@hono/node-server'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
-import { cors } from 'hono/cors'
 import authRouter from './routes/auth'
 import todoRouter from './routes/todo'
 import imageRouter from './routes/image'
@@ -32,15 +31,24 @@ app.onError(errorHandler)
 // Logger middleware
 app.use('/*', loggerMiddleware)
 
-// CORS middleware
-app.use('/*', cors({
-  origin: '*',
-  allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization'],
-  exposeHeaders: ['Content-Length', 'X-Request-Id'],
-  maxAge: 600,
-  credentials: false,
-}))
+// CORS middleware manual
+app.use('/*', async (c, next) => {
+  // Handle preflight
+  if (c.req.method === 'OPTIONS') {
+    c.header('Access-Control-Allow-Origin', '*')
+    c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+    c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    c.header('Access-Control-Max-Age', '600')
+    return c.text('', 204)
+  }
+
+  await next()
+
+  // Add CORS headers to all responses
+  c.header('Access-Control-Allow-Origin', '*')
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+})
 
 // Healthcheck público
 app.get('/health', (c) => {
