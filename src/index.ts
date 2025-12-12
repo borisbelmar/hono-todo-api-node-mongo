@@ -39,7 +39,7 @@ app.use('/*', async (c, next) => {
     c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
     c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     c.header('Access-Control-Max-Age', '600')
-    return c.text('', 204)
+    return c.body(null, 204)
   }
 
   await next()
