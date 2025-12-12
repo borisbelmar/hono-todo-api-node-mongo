@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { swaggerUI } from '@hono/swagger-ui'
+import { cors } from 'hono/cors'
 import authRouter from './routes/auth'
 import todoRouter from './routes/todo'
 import imageRouter from './routes/image'
@@ -32,20 +33,7 @@ app.onError(errorHandler)
 app.use('/*', loggerMiddleware)
 
 // CORS middleware manual
-app.use('/*', async (c, next) => {
-  // Set CORS headers before processing the request
-  c.header('Access-Control-Allow-Origin', '*')
-  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  c.header('Access-Control-Max-Age', '600')
-
-  // Handle preflight
-  if (c.req.method === 'OPTIONS') {
-    return c.body(null, 204)
-  }
-
-  await next()
-})
+app.use('/*', cors())
 
 // Healthcheck público
 app.get('/health', (c) => {
